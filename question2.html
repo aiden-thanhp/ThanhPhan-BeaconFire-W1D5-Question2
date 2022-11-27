@@ -49,16 +49,19 @@
     <script>
         const tableData = [
             {
+                id: 1,
                 name: "M&M",
                 category: "Snacks",
                 price: "$1.99"
             },
             {
+                id: 2,
                 name: "Table",
                 category: "Furniture",
                 price: "$199"
             },
             {
+                id: 3,
                 name: "Kale",
                 category: "Vegetables",
                 price: "$2.49"
@@ -66,7 +69,11 @@
         ]
 
         function deleteRow(element) {
-            element.parentNode.parentNode.remove()
+            const newId = element.parentNode.parentNode.getAttribute('id');
+            //console.log(newId)
+            tableData.splice(tableData.findIndex(element => element.id == newId), 1);
+            console.log(tableData)
+            element.parentNode.parentNode.remove();
         }
 
         const myForm = document.getElementById("myForm");
@@ -75,6 +82,7 @@
         // Create initial data:
         tableData.forEach((row) => {
             const newRow = document.createElement("tr");
+            newRow.setAttribute('id', row.id)
             newRow.innerHTML = `
                 <td>${row.name}</td>
                 <td>${row.category}</td>
@@ -88,6 +96,16 @@
             e.preventDefault();
             // Create a new form data:
             const newRow = document.createElement("tr");
+            const newId = tableData.length > 0 ? tableData[tableData.length-1].id + 1 : 1;
+            const newData = {
+                id: newId,
+                name: myForm.elements["name"].value,
+                category: myForm.elements["name"].value,
+                price: myForm.elements["name"].value
+            }
+            newRow.setAttribute('id', newData.id);
+            tableData.push(newData);
+            console.log(tableData)
             newRow.innerHTML = `
                 <td>${myForm.elements["name"].value}</td>
                 <td>${myForm.elements["cat"].value}</td>
