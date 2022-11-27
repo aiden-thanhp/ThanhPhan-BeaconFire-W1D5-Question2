@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <meta http-equiv='X-UA-Compatible' content='ie=edge' />
+    <title>Thanh Phan - W1D5 - Coding Question 2</title>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        table {
+            width: 100%
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Category</th>
+                <th>Product Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody style="text-align: center" id="displayTable">
+        </tbody>
+    </table>
+
+    <h4>Add Product</h4>
+
+    <form id="myForm">
+        <label for="name">Product Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="cat">Product Category:</label>
+        <input type="text" id="cat" name="cat" required>
+
+        <label for="price">Product Price:</label>
+        <input type="text" id="price" name="price" required>
+
+        <button type="submit">Add New</button>
+    </form>
+
+    <script>
+        const tableData = [
+            {
+                name: "M&M",
+                category: "Snacks",
+                price: "$1.99"
+            },
+            {
+                name: "Table",
+                category: "Furniture",
+                price: "$199"
+            },
+            {
+                name: "Kale",
+                category: "Vegetables",
+                price: "$2.49"
+            }
+        ]
+
+        function deleteRow(element) {
+            element.parentNode.parentNode.remove()
+        }
+
+        const myForm = document.getElementById("myForm");
+        const displayTable = document.getElementById("displayTable");
+
+        // Create initial data:
+        tableData.forEach((row) => {
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td>${row.name}</td>
+                <td>${row.category}</td>
+                <td>${row.price}</td>
+                <td><button onclick="deleteRow(this)">Delete</button></td>
+            `
+            displayTable.appendChild(newRow);
+        })
+
+        myForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            // Create a new form data:
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td>${myForm.elements["name"].value}</td>
+                <td>${myForm.elements["cat"].value}</td>
+                <td>${myForm.elements["price"].value}</td>
+                <td><button onclick="deleteRow(this)">Delete</button></td>
+            `
+            displayTable.appendChild(newRow);
+            myForm.elements["name"].value = "";
+            myForm.elements["cat"].value = "";
+            myForm.elements["price"].value = ""
+        })
+    </script>
+</body>
+</html>
